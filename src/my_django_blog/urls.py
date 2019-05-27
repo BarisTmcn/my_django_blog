@@ -26,7 +26,7 @@ from .views import (
 
 urlpatterns = [
 	#path('blog/', blog_post_detail_page),
-	path('blog/<int:post_id>/', blog_post_detail_page),
+	path('blog/<str:slug>/', blog_post_detail_page),
 	path('about/', about_page),
 	path('contact/', contact_page),
 	path('', home_page),
