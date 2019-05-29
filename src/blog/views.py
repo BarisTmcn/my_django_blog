@@ -7,15 +7,7 @@ from .models import BlogPost
 
 
 
-def blog_post_detail_page(request, slug):
-	# queryset = BlogPost.objects.filter(slug=slug)
-	# if queryset.count() == 0:
-	# 	raise Http404
-	# obj = queryset.first()
-	obj = get_object_or_404(BlogPost, slug=slug)
-	template_name = 'blog_post_detail.html'
-	context = {"object": obj}
-	return render(request, template_name, context)
+
 
 #CRUD (create, retrieve, update, delete)
 
@@ -24,22 +16,23 @@ def blog_post_detail_page(request, slug):
 
 def blog_post_list_view(request):
 	#list out objects,maybe search
+	qs = BlogPost.objects.all()
 	template_name = "blog_post_list.html"
-	context = {"objetc_list": []}
+	context = {"object_list": qs}
 	return render(request, template_name, context)
 
 def blog_post_create_view(request):
 	#create objects using a form
 	template_name = "blog_post_create.html"
 	context = {"form": None}
-	return
+	return render(request, template_name, context)
 
 def blog_post_detail_view(request, slug):
 	# 1 object-->detail view
 	obj = get_object_or_404(BlogPost, slug=slug)
 	template_name = "blog_post_detail.html"
 	context = {"object": obj}
-	return
+	return render(request, template_name, context)
 
 def blog_post_update_view(request, slug):
 	obj = get_object_or_404(BlogPost, slug=slug)
