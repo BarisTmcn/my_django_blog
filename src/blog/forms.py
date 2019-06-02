@@ -13,16 +13,13 @@ class BlogPostModelForm(forms.ModelForm):
 		model = BlogPost
 		fields = ['title', 'slug', 'content']
 
-	def clean_email(self, *args, **kwargs):
-		email = self.cleaned_data.get('email')
-		print(email)
-		if email.endswith(".edu"):
-			raise forms.ValidationError("This is not a valid email.Please don't use  .edu")
-		return email
-
 	def clean_title(self, *args, **kwargs):
+		instance = self.instance
+		print(instance)
 		title = self.cleaned_data.get('title')
-		qs = BlogPost.objects.filter(title__iexactS=title)
+		qs = BlogPost.objects.filter(title__iexact=title)
+		if instance is not None:
+			qs = qs.exclude(pk=instance.pk)
 		if qs.exists():
 			raise forms.ValidationError("This title already been used. Please try again.")
 		return title	
